@@ -1,0 +1,79 @@
+/* 作品特輯動態：海報後有機色塊、CTA 聲波漂移與錄音鈕漣漪、稿紙游標（降低動態時全部靜止） */
+
+@keyframes work-drift-60 {
+  to {
+    transform: translateX(-60px);
+  }
+}
+
+@keyframes work-drift-80 {
+  to {
+    transform: translateX(-80px);
+  }
+}
+
+@keyframes work-ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+@keyframes work-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.15;
+  }
+}
+
+.work-w1 {
+  animation: work-drift-60 7s linear infinite;
+}
+
+.work-w2 {
+  animation: work-drift-80 11s linear infinite;
+}
+
+/* P4：14 秒形變接近果凍感 → 改靜態，只在進頁時淡入一次（〇四b 墨暈 @120） */
+.work-blob {
+  border-radius: 58% 42% 63% 37% / 45% 55% 45% 55%;
+  animation: p4-fade-in var(--dur-4) var(--ease-enter) 120ms both;
+}
+
+.work-ring {
+  animation: work-ripple 2.8s ease-out infinite;
+}
+
+.work-ring-delay {
+  animation: work-ripple 2.8s ease-out 1.4s infinite;
+}
+
+.work-caret {
+  animation: work-blink 1.2s ease-in-out infinite;
+}
+
+/* manuscript.grid：30×30 原稿紙格線（ink-200） */
+.work-manuscript {
+  background-color: var(--color-paper);
+  background-image:
+    linear-gradient(var(--color-ink-200) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-ink-200) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-w1,
+  .work-w2,
+  .work-ring,
+  .work-ring-delay,
+  .work-caret {
+    animation: none;
+  }
+}

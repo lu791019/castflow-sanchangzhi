@@ -1,0 +1,6 @@
+{
+  "name": "castflow-worker",
+  "private": true,
+  "type": "module",
+  "description": "本機常駐 worker：拉轉錄佇列 → mlx-whisper 本機轉錄 → Groq fallback → 觸發文案生成"
+}

@@ -1,0 +1,19 @@
+node_modules
+packages/*/node_modules
+.next
+.git
+.claude
+design
+test-assets
+worker/*
+!worker/notify.ts
+supabase/.temp
+.env
+.env.*
+*.log
+test-results
+playwright-report
+
+# E2E 不進映像（next build 會型別檢查到 e2e 對 worker 的引用）
+e2e
+playwright*.config.ts

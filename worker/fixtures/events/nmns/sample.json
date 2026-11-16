@@ -1,0 +1,12 @@
+{
+  "itemList": [
+    {
+      "title": "範例科學特展（合成資料，非真實活動）",
+      "dateStart": "2030/05/01",
+      "dateEnd": "2030/08/31",
+      "location": "範例廳/1F",
+      "mainImage": "https://example.com/sample.jpg",
+      "url": "https://www.nmns.edu.tw/park_1/exhibitions/Exhibition-9001/"
+    }
+  ]
+}

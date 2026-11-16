@@ -1,0 +1,28 @@
+/* P4 〇三 期號章：空白頁出現後 40ms 落下，−5°→−8°、1.15→1、exit 200ms（與日期章同一套 p4-stamp） */
+.proof-stamp {
+  --stamp-angle-from: -5deg;
+  --stamp-angle: -8deg;
+  transform: rotate(-8deg);
+  animation: p4-stamp 200ms var(--ease-exit) 40ms both;
+}
+
+/* 期號章之後：連結 @320、兩個按鈕 @360／@400（相對空白頁出現） */
+.proof-after-stamp {
+  animation: p4-rise var(--dur-3) var(--ease-enter) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proof-stamp {
+    animation: p4-fade-in var(--dur-1) var(--ease-standard) both;
+  }
+
+  .proof-after-stamp {
+    animation: p4-fade-in var(--dur-1) var(--ease-standard) both;
+    animation-delay: 0ms !important;
+  }
+}
+
+/* 就地編輯：textarea 撐開到內容高度（不支援 field-sizing 的瀏覽器由 JS 補） */
+.proof-editable {
+  field-sizing: content;
+}

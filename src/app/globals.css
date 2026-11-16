@@ -1,0 +1,806 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "./motion-polish.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans), var(--font-sans-tc);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* 分享頁 design tokens（雜誌感 · 底片紙本）。
+   燒橙系命名為 ember，避免與 shadcn 既有 --color-accent 衝突。 */
+@theme {
+  --color-paper: #faf8f4;
+  --color-paper-2: #f3f0ea;
+  --color-ink-950: #141210;
+  --color-ink-900: #1f1c19;
+  --color-ink-800: #2e2a26;
+  --color-ink-700: #4a4540;
+  --color-ink-600: #67615a;
+  --color-ink-400: #8c857d;
+  --color-ink-300: #c2bcb2;
+  --color-ink-200: #dad5cc;
+  --color-ink-50: #e9e5de;
+  --color-ember: #c9562a;
+  --color-ember-dark: #b4471b;
+  --color-ember-deep: #8f3714;
+  --color-ember-soft: #e8a27d;
+  --color-ember-tint: #fbeee6;
+  --color-ember-tint-2: #f6e1d4;
+
+  --font-serif-tc: "Noto Serif TC", "Songti TC", serif;
+  --font-sans-tc: "Noto Sans TC", "PingFang TC", "微軟正黑體",
+    "Microsoft JhengHei", sans-serif;
+
+  --text-eyebrow: 11px;
+  --text-caption: 12px;
+  --text-note: 13px;
+  --text-lede: 15px;
+  --text-prose: 17px;
+  --text-section: 22px;
+  --text-quote: 23px;
+  --text-headline: 30px;
+}
+
+/* 語意層重指：shadcn 語意變數全部引用雜誌 token（paper 暖紙底 / ink 墨色階 / ember 燒橙），放映廳時跟著換，
+   app 介面藉此整體換皮；分享頁用明確的 ink/ember class，不受此層影響。 */
+:root {
+  --background: var(--color-paper);
+  --foreground: var(--color-ink-900);
+  --card: var(--color-paper);
+  --card-foreground: var(--color-ink-900);
+  --popover: var(--color-paper);
+  --popover-foreground: var(--color-ink-900);
+  --primary: var(--color-ember-dark); /* 主要動作與連結 */
+  --primary-foreground: var(--color-paper);
+  --secondary: var(--color-paper-2);
+  --secondary-foreground: var(--color-ink-800);
+  --muted: var(--color-paper-2);
+  --muted-foreground: var(--color-ink-600);
+  --accent: var(--color-paper-2);
+  --accent-foreground: var(--color-ink-800);
+  --destructive: #a63a2a; /* 磚紅，與暖色系協調 */
+  --border: var(--color-ink-200); /* 髮絲線 */
+  --input: var(--color-ink-300); /* 表單框需比髮絲線清楚 */
+  --ring: var(--color-ember);
+  --chart-1: #c9562a;
+  --chart-2: #4a4540;
+  --chart-3: #e8a27d;
+  --chart-4: #8c857d;
+  --chart-5: #8f3714;
+  --radius: 0.25rem; /* 編輯檯：小圓角，去玩具感 */
+  --sidebar: var(--color-paper-2);
+  --sidebar-foreground: var(--color-ink-800);
+  --sidebar-primary: var(--color-ember-dark);
+  --sidebar-primary-foreground: var(--color-paper);
+  --sidebar-accent: var(--color-ink-50);
+  --sidebar-accent-foreground: var(--color-ink-950);
+  --sidebar-border: var(--color-ink-200);
+  --sidebar-ring: var(--color-ember);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.809 0.105 251.813);
+  --chart-2: oklch(0.623 0.214 259.815);
+  --chart-3: oklch(0.546 0.245 262.881);
+  --chart-4: oklch(0.488 0.243 264.376);
+  --chart-5: oklch(0.424 0.199 265.638);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+/* P0/P1 tokens ─────────────────────────────────────────────
+   設計稿「P0 新增 Token」「P1 新增 Token」：色票 0 新增、字級 0 新增，
+   只新增用途（語意別名）、一個透明度（scrim）、圓角規則與時間/動效規則。 */
+@theme {
+  /* 透明度：sheet 後方遮罩（唯一新的值）；票根缺口 = 遮罩疊在紙上的顏色 */
+  --color-scrim: rgb(20 18 16 / 0.55);
+  --color-ticket-notch: #7c7a77;
+
+  /* P0 用途 */
+  --color-action-primary: var(--color-ember-dark);
+  --color-choice-selected: var(--color-ember-tint);
+  --color-choice-pressed: var(--color-paper-2);
+  --color-selection-text: var(--color-ember-tint-2);
+  --color-popover-ink: var(--color-ink-950);
+  --color-stamp: var(--color-ember-dark);
+
+  /* P1 用途 */
+  --color-stamp-ink: var(--color-ember-dark);
+  --color-ticket-perforation: var(--color-ink-300);
+  --color-place-selected-bg: var(--color-ember-tint);
+  --color-place-selected-border: var(--color-ember-dark);
+  --color-calendar-today: var(--color-ember-dark);
+  --color-calendar-selected-bg: var(--color-paper-2);
+  --color-calendar-selected-border: var(--color-ink-950);
+  --color-unread-dot: var(--color-ember);
+  --color-action-disabled-bg: var(--color-ink-50);
+  --color-action-disabled-fg: var(--color-ink-600);
+  --color-entry-skipped-title: var(--color-ink-600);
+  --color-entry-skipped-status: var(--color-ink-400);
+
+  /* 圓角：按鈕、sheet 一律 4px；圓形只留給中央圓鈕與頭像 */
+  --radius-control: 4px;
+
+  /* 動效 */
+  --ease-sheet: cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* P4：原本 cubic-bezier(.3,1.6,.5,1) 會過衝 → 改 exit（加速落下、碰紙即停），1.15→1 */
+  --ease-stamp: cubic-bezier(0.4, 0, 1, 1);
+  --animate-stamp-in: stamp-in 200ms var(--ease-stamp) both;
+  --animate-sheet-up: sheet-up 280ms var(--ease-sheet) both;
+  --animate-scrim-in: fade-in 280ms cubic-bezier(0.3, 0.1, 0.2, 1) both;
+  --animate-toast-in: toast-in 220ms var(--ease-sheet) both;
+
+  @keyframes stamp-in {
+    from {
+      opacity: 0;
+      scale: 1.15;
+    }
+    to {
+      opacity: 1;
+      scale: 1;
+    }
+  }
+
+  @keyframes sheet-up {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* 中央圓鈕長按（P4 〇一b）：外圈 400ms 線性畫滿；早放 160ms 倒退收回 */
+.press-ring {
+  stroke-dasharray: 232.5;
+  stroke-dashoffset: 232.5;
+  transition: stroke-dashoffset 160ms cubic-bezier(0.3, 0.1, 0.2, 1);
+}
+
+.press-ring-filling {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 400ms linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-stamp-in,
+  .animate-sheet-up,
+  .animate-scrim-in,
+  .animate-toast-in {
+    animation: none;
+  }
+}
+/* ───────────────────────────────────────────── P0/P1 tokens */
+
+/* P2 tokens：設定與狀態（設計稿 P2_新增_Token）。色票 0 新增，只有新用途、尺寸與時間規則 */
+:root {
+  /* schedule.rail：排程中列左側 2px 燒橙線（不加底色，和「選中」分開） */
+  --p2-schedule-rail: inset 2px 0 0 var(--color-ember);
+  /* 底線式選中（分頁、單選文字鈕） */
+  --p2-underline-on: inset 0 -2px 0 var(--color-ember);
+  --p2-underline-off: inset 0 -1px 0 var(--color-ink-400);
+  /* manuscript：稿紙格線 30px 一格 */
+  --p2-manuscript-cell: 30px;
+  /* delete.undo：刪除後可救回的秒數；offline.queue：斷線多久才出橫幅 */
+  --p2-undo-ms: 5000;
+  --p2-offline-delay-ms: 3000;
+}
+
+/* 稿紙格線：空狀態、錯誤態、轉錄中共用 */
+.p2-manuscript {
+  background-image:
+    linear-gradient(var(--color-ink-200) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-ink-200) 1px, transparent 1px);
+  background-size: var(--p2-manuscript-cell) var(--p2-manuscript-cell);
+  border-right: 1px solid var(--color-ink-200);
+  border-bottom: 1px solid var(--color-ink-200);
+}
+
+/* 逐字稿橫線紙（看原本說的） */
+.p2-ruled {
+  background-image: linear-gradient(transparent 29px, var(--color-ink-50) 29px);
+  background-size: 100% 30px;
+  line-height: 30px;
+}
+
+/* caret.blink：1.1s steps(1)；減少動態時停在顯示 */
+@keyframes p2-caret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.p2-caret {
+  animation: p2-caret 1.1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p2-caret {
+    animation: none;
+  }
+}
+/* /P2 tokens */
+
+/* P4 dark ─────────────────────────────────────────────
+   設計稿「P4 放映廳・色票表」「P4 深色 Token」：明亮組完全不動，新增 screen／reel／lamp 15 色與 6 個透明度。
+   作法：<html data-theme="screen"> 時把 paper／ink／ember 的值換成放映廳對應值，
+   元件繼續用原本的 class，主題切換只換值（色票表「語意對照」那一欄）。
+   data-theme 由 head inline script（src/lib/theme/init-script.ts）在首屏前寫好。 */
+@theme {
+  --color-screen-950: #141110;
+  --color-screen-900: #1c1816;
+  --color-screen-850: #231e1b;
+  --color-screen-800: #2b2521;
+  --color-reel-100: #ede6da;
+  --color-reel-200: #d9d2c7;
+  --color-reel-300: #bdb5a9;
+  --color-reel-400: #a39b8f;
+  --color-reel-500: #8e867a;
+  --color-reel-600: #5e574f;
+  --color-lamp-300: #e39a72;
+  --color-lamp-500: #d2693a;
+  --color-lamp-600: #a8481e;
+  --color-lamp-800: #3b2619;
+  --color-lamp-900: #2e1e16;
+}
+
+:root {
+  --rule-faint: rgb(217 210 199 / 0.07);
+  --rule-hairline: rgb(217 210 199 / 0.12);
+  --rule-edge: rgb(217 210 199 / 0.16);
+  --rule-strong: rgb(237 230 218 / 0.5);
+  --grid-manuscript: rgb(217 210 199 / 0.08);
+  --scrim-dark: rgb(8 6 5 / 0.55);
+  --poster-veil: rgb(201 86 42 / 0.04);
+}
+
+/* 明亮值：給「反白」表面（toast、選單、深色 CTA 區、說一段整頁）在放映廳裡沿用 */
+.p4-inverse {
+  --color-paper: #faf8f4;
+  --color-paper-2: #f3f0ea;
+  --color-ink-950: #141210;
+  --color-ink-900: #1f1c19;
+  --color-ink-800: #2e2a26;
+  --color-ink-700: #4a4540;
+  --color-ink-600: #67615a;
+  --color-ink-400: #8c857d;
+  --color-ink-300: #c2bcb2;
+  --color-ink-200: #dad5cc;
+  --color-ink-50: #e9e5de;
+  --color-ember: #c9562a;
+  --color-ember-dark: #b4471b;
+  --color-ember-deep: #8f3714;
+  --color-ember-soft: #e8a27d;
+  --color-ember-tint: #fbeee6;
+  --color-ember-tint-2: #f6e1d4;
+}
+
+:root[data-theme="screen"] {
+  color-scheme: dark;
+  /* bg.page／bg.sunken／bg.pressed */
+  --color-paper: var(--color-screen-950);
+  --color-paper-2: var(--color-screen-850);
+  --color-ink-50: var(--color-screen-800);
+  /* text.title → text.disabled；rule.hairline */
+  --color-ink-950: var(--color-reel-100);
+  --color-ink-900: var(--color-reel-200);
+  --color-ink-800: var(--color-reel-300);
+  --color-ink-700: var(--color-reel-400);
+  --color-ink-600: var(--color-reel-500);
+  --color-ink-400: var(--color-reel-500);
+  --color-ink-300: var(--color-reel-600);
+  --color-ink-200: var(--rule-hairline);
+  /* accent.line／accent.text／choice.selected／highlight */
+  --color-ember: var(--color-lamp-500);
+  --color-ember-dark: var(--color-lamp-300);
+  --color-ember-deep: var(--color-lamp-300);
+  --color-ember-soft: var(--color-lamp-300);
+  --color-ember-tint: var(--color-lamp-900);
+  --color-ember-tint-2: var(--color-lamp-800);
+  /* scrim／stamp.ink */
+  --color-scrim: var(--scrim-dark);
+  --color-ticket-notch: #0d0b0a;
+  --color-stamp: var(--color-lamp-500);
+  --color-stamp-ink: var(--color-lamp-500);
+  --color-calendar-today: var(--color-lamp-300);
+}
+
+/* rule.strong：刊頭線、區塊頂粗線（ink-950 當線用時不是字色 reel-100，而是 50%） */
+:root[data-theme="screen"] .border-ink-950 {
+  border-color: var(--rule-strong);
+}
+
+/* action.primary：主按鈕底 lamp-600、字 reel-100（ember-dark 當底用時） */
+:root[data-theme="screen"] .bg-ember-dark {
+  background-color: var(--color-lamp-600);
+  color: var(--color-reel-100);
+}
+
+:root[data-theme="screen"] .bg-ember-dark .text-paper,
+:root[data-theme="screen"] .bg-ember-dark.text-paper {
+  color: var(--color-reel-100);
+}
+
+/* 反白表面在放映廳：不再是墨底，而是浮起一層 screen-900＋頂緣 rule.edge（不用陰影） */
+:root[data-theme="screen"] .p4-inverse.bg-ink-950,
+:root[data-theme="screen"] .p4-inverse .bg-ink-950 {
+  background-color: var(--color-screen-900);
+}
+
+:root[data-theme="screen"] .p4-inverse.bg-ink-950 {
+  box-shadow: inset 0 1px 0 var(--rule-edge);
+}
+
+:root[data-theme="screen"] .p4-inverse.p4-band {
+  box-shadow:
+    inset 0 1px 0 var(--rule-edge),
+    inset 0 -1px 0 var(--rule-edge);
+}
+
+/* 反白表面上的紙色鈕（深色 CTA 區的「開始說」）：放映廳裡不用近白，降為 reel-100 */
+:root[data-theme="screen"] .p4-inverse .bg-paper {
+  background-color: var(--color-reel-100);
+}
+
+/* 說一段整頁：底 screen-950 */
+:root[data-theme="screen"] .p4-inverse.p4-stage {
+  background-color: var(--color-screen-950);
+  box-shadow: none;
+}
+
+/* poster.veil：海報與封面在黑裡退半步——brightness .86＋約 4% 暖色（以 sepia 近似燒橙 multiply 疊層） */
+:root[data-theme="screen"] img {
+  filter: brightness(0.86) sepia(0.04);
+}
+
+:root[data-theme="screen"] .p2-manuscript {
+  background-image:
+    linear-gradient(var(--grid-manuscript) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-manuscript) 1px, transparent 1px);
+  border-color: var(--grid-manuscript);
+}
+
+:root[data-theme="screen"] .p2-ruled {
+  background-image: linear-gradient(transparent 29px, var(--rule-faint) 29px);
+}
+
+:root[data-theme="screen"] ::selection {
+  background: var(--color-lamp-800);
+}
+
+/* motion.themeSwitch：底色先暗（0–240ms），字後亮（120–360ms）；減少動態時直接切換 */
+:root.theme-switching,
+:root.theme-switching * {
+  transition:
+    background-color 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 240ms cubic-bezier(0.2, 0.8, 0.2, 1) 120ms,
+    fill 240ms cubic-bezier(0.2, 0.8, 0.2, 1) 120ms,
+    stroke 240ms cubic-bezier(0.2, 0.8, 0.2, 1) 120ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root.theme-switching,
+  :root.theme-switching * {
+    transition: none !important;
+  }
+}
+/* ───────────────────────────────────────────── P4 dark */
+
+/* P4 motion ─────────────────────────────────────────────
+   設計稿「P4 動效規格表 一／二」實作 token：三條緩動、七階時長、40ms 交錯、返回 ×0.8。
+   動效是紙的物理：不過衝、不彈跳、不 shimmer、不做裝飾性循環。 */
+@theme {
+  --ease-standard: cubic-bezier(0.3, 0.1, 0.2, 1);
+  --ease-enter: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+}
+
+:root {
+  --dur-1: 120ms;
+  --dur-2: 160ms;
+  --dur-3: 220ms;
+  --dur-4: 280ms;
+  --dur-5: 320ms;
+  --dur-6: 360ms;
+  --dur-weight: 480ms;
+  --stagger: 40ms;
+  --longpress: 400ms;
+  --hold-stamp: 600ms;
+  --hold-tag: 800ms;
+  --back-ratio: 0.8;
+  --stamp-from: 1.15;
+}
+
+@keyframes p4-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes p4-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes p4-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes p4-sheet-down {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* 蓋章：1.15、0° 加速落下到 1.0、終點角度（--stamp-angle），墨色前 30% 就到 .92 */
+@keyframes p4-stamp {
+  0% {
+    opacity: 0;
+    transform: scale(var(--stamp-from)) rotate(var(--stamp-angle-from, 0deg));
+  }
+  30% {
+    opacity: 0.92;
+  }
+  100% {
+    opacity: 0.92;
+    transform: scale(1) rotate(var(--stamp-angle, -3deg));
+  }
+}
+
+/* 校樣抽走：向上 110%（只有「發佈」往上） */
+@keyframes p4-pull-up {
+  to {
+    transform: translateY(-110%);
+  }
+}
+
+/* 圓鈕滿圈：1→1.08→1，兩段 ease-out，停在終點 */
+@keyframes p4-press-swell {
+  0% {
+    transform: scale(1);
+    animation-timing-function: var(--ease-standard);
+  }
+  43% {
+    transform: scale(1.08);
+    animation-timing-function: var(--ease-standard);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 未讀點：0→1 縮放，外環只脈動一次 */
+@keyframes p4-dot-in {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes p4-dot-ring {
+  from {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  to {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* 〇五 列表進場：每列晚 40ms，第七列起與第六列同時 */
+.p4-stagger > * {
+  animation: p4-rise var(--dur-3) var(--ease-enter) both;
+}
+
+.p4-stagger > :nth-child(2) {
+  animation-delay: calc(var(--stagger) * 1);
+}
+
+.p4-stagger > :nth-child(3) {
+  animation-delay: calc(var(--stagger) * 2);
+}
+
+.p4-stagger > :nth-child(4) {
+  animation-delay: calc(var(--stagger) * 3);
+}
+
+.p4-stagger > :nth-child(5) {
+  animation-delay: calc(var(--stagger) * 4);
+}
+
+.p4-stagger > :nth-child(n + 6) {
+  animation-delay: calc(var(--stagger) * 5);
+}
+
+/* 〇四 頁面：新內容 opacity 0→1・translateY 8→0（60–220ms）；分頁之間只交叉淡入 120ms */
+.p4-page {
+  animation: p4-rise 160ms var(--ease-enter) 60ms both;
+}
+
+.p4-tab-page {
+  animation: p4-fade-in var(--dur-1) var(--ease-standard) both;
+}
+
+.p4-stamp {
+  animation: p4-stamp 200ms var(--ease-exit) both;
+}
+
+.p4-fade-out {
+  animation: p4-fade-out var(--dur-2) var(--ease-standard) both;
+}
+
+.p4-sheet-down {
+  animation: p4-sheet-down var(--dur-3) var(--ease-exit) both;
+}
+
+.p4-pull-up {
+  animation: p4-pull-up var(--dur-5) var(--ease-exit) both;
+}
+
+.p4-press-swell {
+  animation: p4-press-swell 280ms both;
+}
+
+.p4-dot {
+  animation: p4-dot-in var(--dur-2) var(--ease-enter) both;
+}
+
+.p4-dot-ring {
+  animation: p4-dot-ring var(--dur-weight) var(--ease-standard) var(--dur-2) both;
+}
+
+/* 背景頁被 sheet 壓低：scale .98、圓角 4px（〇一a） */
+.p4-under-sheet {
+  transition:
+    transform var(--dur-4) var(--ease-standard),
+    border-radius var(--dur-4) var(--ease-standard);
+}
+
+.p4-under-sheet[data-sheet-open="true"] {
+  transform: scale(0.98);
+  border-radius: 4px;
+  overflow: clip;
+}
+
+/* 減少動態：所有位移、縮放、旋轉改 120ms 透明度；保留長按進度弧與停留時長；戳章直接以最終角度出現 */
+@media (prefers-reduced-motion: reduce) {
+  .p4-stagger > *,
+  .p4-page,
+  .p4-tab-page,
+  .animate-sheet-up,
+  .animate-toast-in,
+  .animate-scrim-in {
+    animation: p4-fade-in var(--dur-1) var(--ease-standard) both;
+    animation-delay: 0ms;
+  }
+
+  .p4-stamp,
+  .animate-stamp-in {
+    animation: p4-fade-in var(--dur-1) var(--ease-standard) both;
+    opacity: 0.92;
+    transform: rotate(var(--stamp-angle, -3deg));
+  }
+
+  .p4-sheet-down,
+  .p4-pull-up {
+    animation: p4-fade-out var(--dur-1) var(--ease-standard) both;
+  }
+
+  .p4-press-swell,
+  .p4-dot-ring {
+    animation: none;
+  }
+
+  .p4-dot {
+    animation: p4-fade-in var(--dur-1) var(--ease-standard) both;
+  }
+
+  .p4-under-sheet,
+  .p4-under-sheet[data-sheet-open="true"] {
+    transform: none;
+    transition: none;
+  }
+}
+/* ───────────────────────────────────────────── P4 motion */
+
+/* 〇一c「校樣」標籤：進 160 enter、停 800、收 160 exit */
+@keyframes p4-ready-tag {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+    animation-timing-function: var(--ease-enter);
+  }
+  14%,
+  86% {
+    opacity: 1;
+    transform: none;
+    animation-timing-function: var(--ease-exit);
+  }
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+.p4-ready-tag {
+  animation: p4-ready-tag 1120ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p4-ready-tag {
+    animation-name: p4-fade-in;
+    animation-duration: var(--dur-1);
+  }
+}
+
+/* 〇九 下拉更新：格線帶＝30px 稿紙格；放開後 280ms 收回 */
+.p4-pull-band {
+  background-image:
+    linear-gradient(var(--color-ink-200) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-ink-200) 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-position: 0 100%;
+}
+
+:root[data-theme="screen"] .p4-pull-band {
+  background-image:
+    linear-gradient(var(--grid-manuscript) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-manuscript) 1px, transparent 1px);
+}
+
+.p4-pull-settle {
+  transition:
+    height var(--dur-4) var(--ease-standard),
+    transform var(--dur-4) var(--ease-standard);
+}
+
+/* ───────────────────────────────────────────── 體驗盤點收尾（uxread） */
+
+/* UX-08 換頁骨架：等 200ms 才淡入（快的換頁不閃），只淡入一次、不閃爍；降低動態時直接顯示 */
+.page-skeleton {
+  animation: p4-fade-in var(--dur-4) var(--ease-enter) 200ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-skeleton {
+    animation: none;
+  }
+}
+
+/* UX-19 觸控目標：視覺大小不變，用 ::before 把點擊區撐到至少 44×44（置中） */
+@utility hit-44 {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+    transform: translate(-50%, -50%);
+  }
+}

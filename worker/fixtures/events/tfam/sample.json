@@ -1,0 +1,16 @@
+{
+  "Status": "1",
+  "Data": [
+    {
+      "ExID": 9001,
+      "ExName": "範例展覽（合成資料，非真實活動）",
+      "BeginDate": "2030/04/01",
+      "EndDate": "2030/06/30",
+      "Area": "一樓範例展廳",
+      "NowPlayImg": "Exhibition\\Main\\9001\\sample.jpg",
+      "IsSpecial": 0,
+      "ShowStyle": 1,
+      "ExternalLink": ""
+    }
+  ]
+}

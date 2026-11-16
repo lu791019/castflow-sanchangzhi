@@ -1,0 +1,16 @@
+<!-- 正式站登入信（Supabase Auth magic link／confirmation 共用）。以 Supabase Management API 套用。
+     連結直接指向本站（{{ .RedirectTo }} 是 /auth/callback?next=…，再接 token_hash），不露出 supabase.co 網址，任何瀏覽器或 app 打開都能登入 -->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#faf8f4;padding:32px 16px;font-family:-apple-system,'PingFang TC','Noto Sans TC','Microsoft JhengHei',sans-serif;color:#141210;">
+  <tr><td align="center">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:480px;background:#faf8f4;">
+      <tr><td style="padding:0 0 12px;border-bottom:1px solid #141210;font-family:'Songti TC','Noto Serif TC',serif;font-size:17px;font-weight:700;letter-spacing:.12em;">散場誌</td></tr>
+      <tr><td style="padding:28px 0 10px;font-family:'Songti TC','Noto Serif TC',serif;font-size:24px;font-weight:700;line-height:1.4;">登入散場誌</td></tr>
+      <tr><td style="padding:0 0 24px;font-size:15px;line-height:1.8;color:#4a4540;">你剛剛在散場誌用這個 email 要求登入。點下面的按鈕就會登入，不用密碼。</td></tr>
+      <tr><td style="padding:0 0 24px;">
+        <a href="{{ .RedirectTo }}&amp;token_hash={{ .TokenHash }}&amp;type=email" style="display:inline-block;background:#141210;color:#faf8f4;text-decoration:none;font-size:15px;font-weight:700;letter-spacing:.1em;padding:14px 28px;border-radius:4px;">登入散場誌</a>
+      </td></tr>
+      <tr><td style="padding:0 0 28px;font-size:13px;line-height:1.8;color:#67615a;">連結 1 小時內有效、只能用一次。過期或按不開的話，回到散場誌登入頁再寄一封就好。</td></tr>
+      <tr><td style="padding:16px 0 0;border-top:1px solid #dad5cc;font-size:12px;line-height:1.8;color:#67615a;">不是你本人要登入的話，不用理這封信，你的帳號不會有任何變動。<br>散場誌・castflow.daydreamdex.com</td></tr>
+    </table>
+  </td></tr>
+</table>

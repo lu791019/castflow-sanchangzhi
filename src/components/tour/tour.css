@@ -1,0 +1,245 @@
+/*
+ * 新手導覽卡（driver.js 皮）：照 Dex 10/14 影片結構，配色換成散場誌紙色／墨色／ember。
+ * 背景整片暗化；被指到的區塊浮出來、加紙色暖光（不是硬框線）。
+ */
+
+.driver-popover.tour-card {
+  box-sizing: border-box;
+  min-width: min(268px, calc(100vw - 32px));
+  width: max-content;
+  max-width: min(340px, calc(100vw - 32px));
+  padding: 16px 16px 10px 18px;
+  border-radius: 16px;
+  background: var(--color-paper);
+  color: var(--color-ink-900);
+  font-family: var(--font-sans-tc);
+  box-shadow: 0 18px 44px rgb(20 18 16 / 0.3), 0 0 0 1px rgb(20 18 16 / 0.06);
+  transition: opacity 160ms ease-out;
+  animation: tour-card-in 240ms var(--ease-standard, ease-out);
+}
+
+@keyframes tour-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.driver-popover.tour-card .driver-popover-arrow {
+  display: none;
+}
+
+.driver-popover.tour-card .driver-popover-close-btn {
+  display: none;
+}
+
+.tour-card .tour-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--color-ink-700);
+  font-variant-numeric: tabular-nums;
+}
+
+.tour-card .tour-eyebrow::before {
+  content: "";
+  display: block;
+  width: 16px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--color-ember);
+}
+
+.driver-popover.tour-card .driver-popover-title {
+  font-family: var(--font-serif-tc);
+  font-size: 17px;
+  line-height: 1.45;
+  font-weight: 700;
+  color: var(--color-ink-950);
+}
+
+.driver-popover.tour-card .driver-popover-description {
+  margin-top: 4px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--color-ink-700);
+}
+
+.tour-card .tour-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.tour-card .tour-choice {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--color-ink-950);
+  border-radius: 10px;
+  font-family: var(--font-serif-tc);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-ink-950);
+  cursor: pointer;
+}
+
+.tour-card .tour-choice svg {
+  color: var(--color-ember-dark);
+  flex: none;
+}
+
+.tour-card .tour-footer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 10px;
+}
+
+.tour-card .tour-dots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: auto;
+}
+
+.tour-card .tour-dot {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--color-ink-300);
+  transition: width 200ms ease-out, background-color 200ms ease-out;
+}
+
+.tour-card .tour-dot-on {
+  width: 16px;
+  background: var(--color-ink-950);
+}
+
+.tour-card .tour-skip {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--color-ink-600);
+  cursor: pointer;
+}
+
+.tour-card .tour-primary {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 5px 0 18px;
+  border-radius: 999px;
+  background: var(--color-ink-950);
+  color: var(--color-paper);
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.tour-card .tour-knob {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--color-ember);
+  color: var(--color-paper);
+}
+
+.tour-card :is(.tour-primary, .tour-skip, .tour-choice):focus-visible {
+  outline: 2px solid var(--color-ember);
+  outline-offset: 2px;
+}
+
+/* 被指到的區塊：紙色暖光＋ember 淡暈 */
+.driver-active .driver-active-element {
+  border-radius: 12px;
+  box-shadow: 0 0 0 3px rgb(250 248 244 / 0.95), 0 0 28px 8px rgb(232 162 125 / 0.5);
+  transition: box-shadow 200ms ease-out;
+}
+
+/* 導覽進行中先收起圓鈕的第一次提示泡泡，免得兩張說明疊在一起 */
+body.driver-active [data-tour="center-button"] [role="tooltip"] {
+  visibility: hidden;
+}
+
+/* 記下後的 toast 會疊在日誌列上：導覽卡已經說了「排好了／記下了」，導覽中先藏起來 */
+body.driver-active [data-tour="log-toast"] {
+  visibility: hidden;
+}
+
+/* 動作完成、等下一步：卡片先淡掉 */
+html.tour-waiting .driver-popover.tour-card {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* sheet 裡的步驟：整張 sheet（含作品選擇器）可操作、背景暗化減半；卡片釘頂或釘底，不擋要操作的那段 */
+html.tour-in-sheet .driver-overlay {
+  opacity: 0.5;
+}
+
+/* driver.js 的遮罩 path 寫死 pointer-events: auto：sheet 步驟要讓點擊穿過遮罩落到 sheet 上 */
+html.tour-in-sheet .driver-overlay path {
+  pointer-events: none !important;
+}
+
+html.tour-in-sheet body.driver-active [role="dialog"],
+html.tour-in-sheet body.driver-active [role="dialog"] *:not(.pointer-events-none) {
+  pointer-events: auto;
+}
+
+.driver-popover.tour-card.tour-pin-top {
+  top: calc(env(safe-area-inset-top) + 8px) !important;
+  right: 16px !important;
+  left: 16px !important;
+  bottom: auto !important;
+  width: auto;
+  max-width: 448px;
+  margin: 0 auto;
+}
+
+.driver-popover.tour-card.tour-pin-bottom {
+  top: auto !important;
+  right: 16px !important;
+  bottom: calc(env(safe-area-inset-bottom) + 12px) !important;
+  left: 16px !important;
+  width: auto;
+  max-width: 448px;
+  margin: 0 auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .driver-popover.tour-card,
+  .driver-active .driver-active-element,
+  .tour-card .tour-dot {
+    animation: none;
+    transition: none;
+  }
+}

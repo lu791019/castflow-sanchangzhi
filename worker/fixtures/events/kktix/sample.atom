@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 合成樣本：結構仿 KKTIX Atom feed，內容全為虛構 -->
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>合成樣本 feed</title>
+  <entry>
+    <id>tag:kktix.com,2005:Event/100001</id>
+    <link rel="alternate" type="text/html" href="https://example.kktix.cc/events/sample-001"/>
+    <title>範例演出（合成資料，非真實活動）</title>
+    <content type="text">時間：2030/01/05 19:30(+0800) ~ 2030/01/05 21:00(+0800)
+地點：範例劇場 / 臺北市中正區範例路 1 號</content>
+  </entry>
+</feed>

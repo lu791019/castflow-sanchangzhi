@@ -1,0 +1,76 @@
+/* 句邊共鳴記號與「這句我也是」浮層的動態（P3 Token motion.*）；減少動態時直接出現／消失 */
+
+@keyframes resonance-draw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes resonance-fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes resonance-pop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 4px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.resonance-line-draw {
+  transform-origin: top;
+  animation: resonance-draw 280ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.resonance-line-fade {
+  animation: resonance-fade 200ms ease both;
+}
+
+.resonance-pop {
+  transform: translate(-50%, 0);
+  animation: resonance-pop 150ms ease both;
+}
+
+.resonance-passage-text {
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.resonance-passage-text[data-selected="true"] {
+  background-color: var(--color-ember-tint-2);
+  box-shadow: 0 0 0 2px var(--color-ember-tint-2);
+}
+
+/* 長按不要跳出系統選單／放大鏡 */
+.resonance-passage {
+  -webkit-touch-callout: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resonance-line-draw,
+  .resonance-pop {
+    animation: none;
+  }
+  .resonance-line-fade {
+    animation: none;
+    opacity: 0;
+  }
+  .resonance-passage-text {
+    transition: none;
+  }
+}

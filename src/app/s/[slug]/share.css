@@ -1,0 +1,81 @@
+/* 分享頁動態：聲波漂移、有機色塊、錄音鈕漣漪（降低動態時全部靜止） */
+
+@keyframes share-drift-60 {
+  to {
+    transform: translateX(-60px);
+  }
+}
+
+@keyframes share-drift-80 {
+  to {
+    transform: translateX(-80px);
+  }
+}
+
+@keyframes share-drift-back {
+  from {
+    transform: translateX(-80px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes share-blob-morph {
+  0% {
+    border-radius: 58% 42% 63% 37% / 45% 55% 45% 55%;
+  }
+  50% {
+    border-radius: 40% 60% 38% 62% / 58% 40% 60% 42%;
+  }
+  100% {
+    border-radius: 62% 38% 50% 50% / 40% 62% 38% 60%;
+  }
+}
+
+@keyframes share-ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+.share-wave-7s {
+  animation: share-drift-60 7s linear infinite;
+}
+
+.share-wave-11s {
+  animation: share-drift-80 11s linear infinite;
+}
+
+.share-wave-9s-back {
+  animation: share-drift-back 9s linear infinite;
+}
+
+/* P4：14 秒形變接近果凍感 → 改靜態，進頁時淡入一次 */
+.share-blob {
+  border-radius: 58% 42% 63% 37% / 45% 55% 45% 55%;
+  animation: p4-fade-in var(--dur-4) var(--ease-enter) 120ms both;
+}
+
+.share-ring {
+  animation: share-ripple 2.8s ease-out infinite;
+}
+
+.share-ring-delay {
+  animation: share-ripple 2.8s ease-out 1.4s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .share-wave-7s,
+  .share-wave-11s,
+  .share-wave-9s-back,
+  .share-ring,
+  .share-ring-delay {
+    animation: none;
+  }
+}

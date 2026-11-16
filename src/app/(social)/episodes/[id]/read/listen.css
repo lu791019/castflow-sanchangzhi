@@ -1,0 +1,5 @@
+/* 逐字稿中被選取的一句：selection.text = ember-100 */
+.listen-transcript ::selection {
+  background: var(--color-ember-tint-2);
+  color: var(--color-ink-950);
+}

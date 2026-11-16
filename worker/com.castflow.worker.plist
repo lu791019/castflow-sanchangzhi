@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  launchd 常駐範本（/PATH/TO/castflow 換成實際 repo 路徑）：
+    cp worker/com.castflow.worker.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.castflow.worker.plist
+  停用：
+    launchctl unload ~/Library/LaunchAgents/com.castflow.worker.plist
+  run.sh 會載入 ~/.config/castflow/worker.env（雲端連線設定）並設 PATH（mlx_whisper、ffmpeg、nvm 的 node）。
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.castflow.worker</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/PATH/TO/castflow/worker/run.sh</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/PATH/TO/castflow</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/Users/YOU/.local/bin:/opt/homebrew/bin:/usr/bin:/bin</string>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>KeepAlive</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>/PATH/TO/castflow/worker/logs/worker.out.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/PATH/TO/castflow/worker/logs/worker.err.log</string>
+</dict>
+</plist>

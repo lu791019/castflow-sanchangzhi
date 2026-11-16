@@ -1,0 +1,17 @@
+{
+  "name": "@castflow/engine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CastFlow 共用內容引擎：吃「原始內容+設定」吐「結構化 JSON」，不依賴 app/Supabase/Next",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
+    "@ffmpeg/ffmpeg": "^0.12.15",
+    "@ffmpeg/util": "^0.12.2",
+    "@google/generative-ai": "^0.24.1",
+    "groq-sdk": "^1.1.1",
+    "openai": "^6.29.0"
+  }
+}

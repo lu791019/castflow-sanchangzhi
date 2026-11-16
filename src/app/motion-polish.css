@@ -1,0 +1,81 @@
+/* 動效潤飾（Q-44）：換分頁、卡片按壓、記一筆 sheet 收起、目錄焦點海報與引言。
+   沿用 P4 motion token（--dur-*、--ease-*）；prefers-reduced-motion 一律退成 120ms 透明度或不動。 */
+
+/* A 換分頁（底部導覽）：淡入＋往上 4px，160ms；不做左右滑（iPhone PWA 返回手勢衝突） */
+@keyframes p4-tab-shift {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.p4-tab-shift {
+  animation: p4-tab-shift var(--dur-2) var(--ease-enter) both;
+}
+
+/* B 卡片按下：縮到 .98（80ms），放開沿 enter 曲線回到 1（220ms）——紙的回彈，不過衝 */
+.p4-press {
+  transition: transform var(--dur-3) var(--ease-enter);
+}
+
+.p4-press:active {
+  transform: scale(0.98);
+  transition-duration: 80ms;
+  transition-timing-function: var(--ease-standard);
+}
+
+/* C 記一筆 sheet 收起：同開啟的 spring 曲線（.2,.8,.2,1）往下退；拖曳放開回彈也走這條 */
+.p4-sheet-dismiss {
+  animation: p4-sheet-down var(--dur-3) var(--ease-enter) both;
+}
+
+.p4-sheet-settle {
+  transition: translate var(--dur-4) var(--ease-enter);
+}
+
+/* D 目錄焦點：海報 1.03→1 淡入 360ms；引言晚 120ms 淡入 */
+@keyframes p4-poster-in {
+  from {
+    opacity: 0;
+    transform: scale(1.03);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.p4-poster-in {
+  animation: p4-poster-in var(--dur-6) var(--ease-enter) both;
+}
+
+.p4-quote-in {
+  animation: p4-fade-in var(--dur-3) var(--ease-standard) var(--dur-1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p4-tab-shift,
+  .p4-poster-in,
+  .p4-quote-in {
+    animation: p4-fade-in var(--dur-1) var(--ease-standard) both;
+    animation-delay: 0ms;
+  }
+
+  .p4-press,
+  .p4-press:active {
+    transform: none;
+    transition: none;
+  }
+
+  .p4-sheet-dismiss {
+    animation: p4-fade-out var(--dur-1) var(--ease-standard) both;
+  }
+
+  .p4-sheet-settle {
+    transition: none;
+  }
+}
